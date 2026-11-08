@@ -12,11 +12,15 @@ assert.equal((await worker.fetch(req('POST',{},'https://unrelated.example'),{DB}
 assert.equal((await worker.fetch(req('POST','x'.repeat(4097)),{DB})).status,413);
 assert.equal((await worker.fetch(req('POST','broken'),{DB})).status,400);
 assert.equal((await worker.fetch(req('POST',{}),{DB})).status,400);
-let reply={token:'a6ac4de1-9b0b-4de1-8a3e-1694b9235067',firstName:' Camille ',lastName:'Nomcomplet',dates:['2026-12-12','2026-12-23']};
+let reply={token:'a6ac4de1-9b0b-4de1-8a3e-1694b9235067',firstName:' Camille ',dates:['2026-12-12','2026-12-23']};
 assert.equal((await worker.fetch(req('POST',reply),{DB})).status,200);
 let data=await(await worker.fetch(req('GET'),{DB})).json();
-assert.equal(data.total,1);assert.deepEqual(data.guests,['Camille N.']);assert.equal(JSON.stringify(data).includes('Nomcomplet'),false);assert.equal(JSON.stringify(data).includes(reply.token),false);
-reply={...reply,dates:['2026-12-13']};assert.equal((await worker.fetch(req('POST',reply),{DB})).status,200);
+assert.equal(data.total,1);assert.deepEqual(data.guests,['Camille']);assert.equal(JSON.stringify(data).includes(reply.token),false);
+assert.equal(database.prepare('SELECT last_name FROM replies WHERE token=?').get(reply.token).last_name,'');
+database.prepare('UPDATE replies SET last_name=? WHERE token=?').run('Anciennom',reply.token);
+const legacy=await(await worker.fetch(req('GET'),{DB})).json();assert.deepEqual(legacy.guests,['Camille']);assert.equal(JSON.stringify(legacy).includes('Anciennom'),false);
+reply={...reply,dates:['2026-12-13']};assert.equal((await worker.fetch(req('POST',{...reply,lastName:'NomIgnore'}),{DB})).status,200);
+assert.equal(database.prepare('SELECT last_name FROM replies WHERE token=?').get(reply.token).last_name,'');
 data=await(await worker.fetch(req('GET'),{DB})).json();assert.equal(data.total,1);assert.equal(data.dates[0].count,0);assert.equal(data.dates[1].count,1);
 assert.equal((await worker.fetch(req('POST',{...reply,dates:['2026-12-25']}),{DB})).status,400);
 database.close();

@@ -78,17 +78,24 @@ export default function Gingerbread() {
       <path d="m140 277 196-176q14-14 28 0l196 176" stroke="#fffdf5" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round"/>
       {[0,1].map(side=><g key={`snow-${side}`} transform={side?"translate(700 0) scale(-1 1)":undefined} stroke="#fffdf5" strokeLinecap="round"><path d="m176 246 0 9m47-51 0 7m48-50 0 8m44-48 0 6" strokeWidth="5"/><path d="m143 276 7-7m56-51 7-6m52-47 8-7m53-48 9-7" strokeWidth="14"/></g>)}
       {[0,1].map(side=><g key={side} transform={side?"translate(700 0) scale(-1 1)":undefined}>
-        {Array.from({length:8},(_,i)=><g key={i} transform={`translate(${169+i*22} ${272-i*19.4}) rotate(-41.4)`}><path d="M8 0C2-8-4 0 1 5l7 7 7-7c5-5-1-13-7-5Z" stroke="#fff6e4" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></g>)}
-        <path d="M269 277h25m-12-12v25m-9-21 18 17m-18 0 18-17" stroke="#fff6e7" strokeWidth="2.5" strokeLinecap="round"/>
+        {Array.from({length:5},(_,i)=><g key={i} transform={`translate(${171+i*34} ${272-i*30}) rotate(-41.4)`}><path d="M0 5C-5-1 0-8 7-6 17-3 9 9 18 9 25 9 29 4 26 0 23-5 16-1 20 3" stroke="#fff6e4" strokeWidth="1.7" strokeLinecap="round"/><path d="M13-3q-4-8 2-8 5 3-2 8m4 2q7-6 9-1-1 5-9 1" fill="#fff6e4"/></g>)}
+        <path d="M273 278c-14-1-14-20-2-20 12 1 6 15 0 9m6 10c11 4 20-3 17-11-3-7-12-3-8 2" stroke="#fff6e7" strokeWidth="1.8" strokeLinecap="round"/>
+        <path d="M294 280q11-6 12 0-2 6-12 0m-3 4q4 10-2 10-5-4 2-10" fill="#fff6e7"/>
         {[0,1,2,3,4,5].map(i=><circle key={i} cx="179" cy={434+i*19} r="2.2" fill="#fff5df"/>)}
       </g>)}
       <circle cx="350" cy="235" r="37" fill="#ad7448" stroke="#fff8e9" strokeWidth="3.5"/>
       <circle cx="350" cy="235" r="30" stroke="#fff8e9" strokeWidth="1.5"/>
       <Rosette x={350} y={235} size={24}/>
-      <path d="m350 161 6 10-6 10-6-10Z" fill="#fff7e4"/>
+      <path d="M350 183c-20-7-13-22 0-8-8-25 8-25 0 0 13-14 20 1 0 8Z" stroke="#fff7e4" strokeWidth="1.8" strokeLinejoin="round"/>
       {[0,1,2,3,4].map(i=><circle key={i} cx={310+i*20} cy={292+Math.abs(2-i)*-3} r="2.3" fill="#fff7e4"/>)}
-      <path d="M182 404h336" stroke="#fdf5e6" strokeWidth="5" strokeLinecap="round"/>
-      {Array.from({length:10},(_,i)=><path key={i} d={`M${190+i*32} 408q16 12 32 0`} stroke="#fff6e7" strokeWidth="2"/>)}
+      {[238,350,462].map(x=><g key={x} transform={`translate(${x} 409) scale(1 .72)`}>
+        {[0,1].map(side=><g key={side} transform={side?"scale(-1 1)":undefined}>
+          <path d="M-43 0C-33-6-27-13-18-11c10 2 11 11 5 12-6 0-7-6-3-7M-43 0c10 6 16 13 25 11 10-2 11-11 5-12-6 0-7 6-3 7" stroke="#fff5df" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M0-2C-8-11-14 0-7 6l7 6 7-6C14 0 8-11 0-2Z" fill="#8f3547" transform="translate(-25 -1) rotate(90) scale(.55)"/>
+          <path d="M-43 0h-7m-3-3v6" stroke="#fff5df" strokeWidth="2" strokeLinecap="round"/>
+        </g>)}
+        <circle r="2.2" fill="#fff5df"/>
+      </g>)}
       <UpstairsWindow x={244}/><UpstairsWindow x={456}/>
       <Rosette x={350} y={338} size={22}/>
       <circle cx="350" cy="377" r="3" fill="#f9e7ba"/>

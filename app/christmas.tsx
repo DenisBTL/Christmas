@@ -11,7 +11,6 @@ type View = "invitation" | "results" | null;
 export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEndpoint?: string } = {}) {
   const [view, setView] = useState<View>(null);
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [dates, setDates] = useState<string[]>([]);
   const [token, setToken] = useState("");
   const [saved, setSaved] = useState(false);
@@ -45,8 +44,8 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem(storageKey) || "null") as Reply | null;
-      if (stored && typeof stored.firstName === "string" && typeof stored.lastName === "string" && typeof stored.token === "string" && Array.isArray(stored.dates)) {
-        setFirstName(stored.firstName); setLastName(stored.lastName); setToken(stored.token);
+      if (stored && typeof stored.firstName === "string" && typeof stored.token === "string" && Array.isArray(stored.dates)) {
+        setFirstName(stored.firstName); setToken(stored.token);
         setDates(stored.dates.filter(date => DATES.includes(date))); setSaved(true);
       }
     } catch { /* Saving still works when local device storage is unavailable. */ }
@@ -57,7 +56,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialog.current?.showModal();
-    const timeout = setTimeout(() => view === "invitation" && !saved ? firstInput.current?.focus() : undefined, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 2100);
+    const timeout = setTimeout(() => view === "invitation" && !saved ? firstInput.current?.focus() : undefined, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 3900);
     return () => { clearTimeout(timeout); document.body.style.overflow = previousOverflow; lastTrigger.current?.focus(); };
   }, [view]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -86,13 +85,13 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     setSending(true);
     const currentToken = token || crypto.randomUUID();
     setToken(currentToken);
-    const reply: Reply = { token: currentToken, firstName: firstName.trim(), lastName: lastName.trim(), dates };
+    const reply: Reply = { token: currentToken, firstName: firstName.trim(), dates };
     try {
       const response = await fetch(replyEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(reply) });
       const data = await response.json() as { saved?: boolean; error?: string };
       if (!response.ok) throw new Error(data.error || "L’envoi n’a pas abouti. Réessaie.");
       try { localStorage.setItem(storageKey, JSON.stringify(reply)); } catch { setStorageWarning(true); }
-      setFirstName(reply.firstName); setLastName(reply.lastName);
+      setFirstName(reply.firstName);
       setDelivery(true);
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) await new Promise(resolve => setTimeout(resolve, 2300));
       setSaved(true); setDelivery(false);
@@ -149,12 +148,12 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
           <h2 id="dialog-title">{firstName.trim() ? <>Tu es invitée, <em>{firstName.trim()}</em> !</> : <>Tu viens à la <em>maison</em> ?</>}</h2>
           <p className="letter-intro">Coche toutes les dates qui t’arrangent.<br/>Je choisirai celle où nous sommes le plus nombreuses.</p>
           <form onSubmit={submit}>
-            <div className="name-fields"><label>Ton prénom<input ref={firstInput} name="given-name" autoComplete="given-name" required maxLength={60} placeholder="Camille" value={firstName} onChange={event => setFirstName(event.target.value)} disabled={sending}/></label><label>Ton nom<input name="family-name" autoComplete="family-name" required maxLength={60} placeholder="Dupont" value={lastName} onChange={event => setLastName(event.target.value)} disabled={sending}/></label></div>
+            <div className="name-fields first-name-only"><label>Ton prénom<input ref={firstInput} name="given-name" autoComplete="given-name" required maxLength={60} placeholder="Camille" value={firstName} onChange={event => setFirstName(event.target.value)} disabled={sending}/></label></div>
             <fieldset disabled={sending}><legend>Quelles dates t’arrangent ?</legend><p className="field-help" id="dates-help">Allume une boule pour chaque date où tu es dispo. Reclique pour l’enlever.</p><div aria-describedby="dates-help"><DateTree selected={dates} onToggle={date => { setError(""); setDates(previous => previous.includes(date) ? previous.filter(d => d !== date) : [...previous,date]); }} disabled={sending}/></div></fieldset>
             <p className="selection-count" aria-live="polite">{dates.length ? `Tu es dispo ${dates.length===1?"le":"les"} ${DATES.filter(date => dates.includes(date)).map(date => date.slice(-2)).join(", ")} décembre.` : "Tu peux choisir plusieurs dates."}</p>
             {error && <p className="error-message" role="alert">{error}</p>}
             <button className="primary-button submit-button" disabled={sending} type="submit">{sending ? "Envoi en cours…" : "Envoyer mes disponibilités"}{sending ? <span className="spinner"/> : <Mail size={18}/>}</button>
-            <p className="privacy-note">Ton prénom et l’initiale de ton nom seront visibles dans les disponibilités. Tu pourras modifier ta réponse sur cet appareil.</p>
+            <p className="privacy-note">Ton prénom sera visible dans les disponibilités. Tu pourras modifier ta réponse sur cet appareil.</p>
           </form>
           <div className="letter-signature">À très vite, <em>Laulau</em></div>
         </>}

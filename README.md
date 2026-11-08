@@ -6,7 +6,7 @@ Lien public de consultation : https://noel-laulau-reponses-github.norbertmoutier
 
 Lien GitHub prévu après activation de Pages sur main, dossier /docs : https://denisbtl.github.io/Christmas/
 
-Maison en pain d’épices à deux niveaux, toit arrondi enneigé et frise de cœurs, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
+Maison en pain d’épices à deux niveaux, toit arrondi enneigé et frise en volutes, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Une frise de cœurs bordeaux et de glaçage blanc sépare les deux niveaux. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
 
 Les fenêtres affichent leurs contenus devant la maison : bar à hot chocolate avec pluie de marshmallows après six ajouts, décos facultatives pour les cookies préparés par Laura, et rappel de la tenue de Noël. Le formulaire permet de choisir plusieurs dates en décorant un sapin.
 
@@ -29,7 +29,7 @@ GitHub Pages héberge le site et les animations. L’enregistrement partagé uti
 
 Le point d’accès est défini dans `vite.github.config.ts`. Son CORS autorise l’origine GitHub Pages et sa propre origine pour la consultation directe. Les erreurs réseau et les réponses invalides sont affichées sans prétendre que l’enregistrement a réussi. `node scripts/prepare-replies-site.mjs` prépare aussi le site public depuis les fichiers construits de `docs/`.
 
-Le prénom et l’initiale du nom sont affichés dans le récapitulatif. Le nom complet et un identifiant aléatoire sont conservés côté serveur. L’identifiant, enregistré sur l’appareil de l’invitée, permet de mettre à jour sa réponse sans doublon. Changer d’appareil ou effacer les données du navigateur ne permet pas de retrouver cet identifiant.
+Seul le prénom est demandé et affiché dans le récapitulatif. Un identifiant aléatoire, enregistré sur l’appareil de l’invitée, permet de mettre à jour sa réponse sans doublon. Les nouvelles réponses n’enregistrent aucun nom de famille ; les anciens noms ne sont plus affichés. Changer d’appareil ou effacer les données du navigateur ne permet pas de retrouver cet identifiant.
 
 La préférence de réduction des animations est respectée : neige immobile, pas de pluie de marshmallows ni de déplacement d’animaux, et confirmation immédiate.
 

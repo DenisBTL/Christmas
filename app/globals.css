@@ -475,3 +475,11 @@ body{background:#f8f4eb}
 @keyframes envelope-wax-release{0%{opacity:0;visibility:visible;transform:scale(.5)}15%,29%{opacity:1;transform:scale(1)}42%,100%{opacity:0;visibility:hidden;transform:scale(.6)}}
 @keyframes invitation-pull-out{0%,28%{opacity:0;visibility:hidden;transform:translateY(140px) scale(.5)}30%{opacity:1;visibility:visible;transform:translateY(140px) scale(.5)}60%{opacity:1;visibility:visible;transform:translateY(-170px) scale(.5)}100%{opacity:1;visibility:visible;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.with-envelope .letter{animation:none;visibility:visible;opacity:1;transform:none}.with-envelope .envelope{display:none}}
+
+.name-fields.first-name-only{grid-template-columns:minmax(0,1fr)}
+
+.with-envelope .envelope-back,.with-envelope .envelope-front,.with-envelope .envelope-flap,.with-envelope .envelope-seal,.with-envelope .letter{animation-duration:3.8s}
+@keyframes envelope-folds{0%{opacity:0;visibility:visible;transform:scale(.45)}14%{opacity:1;transform:scale(.92)}24%,70%{opacity:1;transform:scale(1)}87%{opacity:.6;transform:translateY(140px) scale(1)}100%{opacity:0;visibility:hidden;transform:translateY(230px) scale(1)}}
+@keyframes envelope-flap-unfold{0%{opacity:0;visibility:visible;transform:perspective(1000px) scale(.45) rotateX(0)}14%{opacity:1;transform:perspective(1000px) scale(.92) rotateX(0)}24%{opacity:1;transform:perspective(1000px) scale(1) rotateX(0)}43%,70%{opacity:1;transform:perspective(1000px) scale(1) rotateX(180deg)}100%{opacity:0;visibility:hidden;transform:perspective(1000px) translateY(230px) rotateX(180deg)}}
+@keyframes envelope-wax-release{0%{opacity:0;visibility:visible;transform:scale(.5)}14%,24%{opacity:1;transform:scale(1)}34%,100%{opacity:0;visibility:hidden;transform:scale(.6)}}
+@keyframes invitation-pull-out{0%,40%{opacity:0;visibility:hidden;transform:translateY(140px) scale(.5)}43%{opacity:1;visibility:visible;transform:translateY(140px) scale(.5)}70%{opacity:1;visibility:visible;transform:translateY(-170px) scale(.5)}100%{opacity:1;visibility:visible;transform:translateY(0) scale(1)}}
