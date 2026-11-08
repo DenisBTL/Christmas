@@ -2,6 +2,10 @@
 
 Invitation de Noël interactive : maison en pain d’épices bordeaux et glaçage blanc, enveloppe animée, choix de plusieurs dates et récapitulatif partagé.
 
+La maison cache trois surprises : chocolat et marshmallows, biscuit qui fait un clin d’œil et petits bonheurs à découvrir. Les trois découvertes allument sa guirlande. La neige peut être arrêtée depuis l’en-tête.
+
+Les disponibilités se choisissent en allumant les boules datées d’un sapin. La lettre se personnalise avec le prénom. Après confirmation d’enregistrement par le serveur, une animation livre le petit mot dans la boîte aux lettres. La tablée des réponses affiche les prénoms et initiales des personnes ayant répondu.
+
 ## Développement
 
 Node.js 22.13 ou ultérieur. Sous Windows, employer npm.cmd si PowerShell bloque npm.ps1.

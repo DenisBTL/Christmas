@@ -8,6 +8,7 @@ export async function GET() {
     const rows = await getDb().select({ firstName: replies.firstName, lastName: replies.lastName, dates: replies.dates }).from(replies).limit(1000);
     const result: Results = {
       total: rows.length,
+      guests: rows.map(row => row.firstName + " " + Array.from(row.lastName)[0] + "."),
       dates: DATES.map(date => {
         const available = rows.filter(row => row.dates.includes(date));
         return { date, count: available.length, guests: available.map(row => row.firstName + " " + Array.from(row.lastName)[0] + ".") };

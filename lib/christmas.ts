@@ -3,4 +3,4 @@ export function dateLabel(date: string) {
   return new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Paris" }).format(new Date(date + "T12:00:00Z"));
 }
 export type Reply = { token: string; firstName: string; lastName: string; dates: string[] };
-export type Results = { total: number; dates: { date: string; count: number; guests: string[] }[] };
+export type Results = { total: number; guests: string[]; dates: { date: string; count: number; guests: string[] }[] };
