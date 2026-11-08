@@ -57,7 +57,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialog.current?.showModal();
-    const timeout = setTimeout(() => view === "invitation" && !saved ? firstInput.current?.focus() : undefined, 850);
+    const timeout = setTimeout(() => view === "invitation" && !saved ? firstInput.current?.focus() : undefined, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 2100);
     return () => { clearTimeout(timeout); document.body.style.overflow = previousOverflow; lastTrigger.current?.focus(); };
   }, [view]); // eslint-disable-line react-hooks/exhaustive-deps
 
