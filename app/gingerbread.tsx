@@ -73,10 +73,12 @@ export default function Gingerbread() {
       <path className="chimney-smoke" d="M469 86q-22-3-12-22 8-15 20-5 12 15-6 17-21 0-16-20 4-16 21-16" stroke="#b3a38f" strokeWidth="2" strokeLinecap="round"/>
       <path d="M170 281 350 121 530 281v272H170Z" fill="url(#houseWall)" stroke="#fff8e7" strokeWidth="5" strokeLinejoin="round"/>
       <path d="M170 281 350 121 530 281v272H170Z" fill="url(#biscuits)"/>
-      <path d="m131 280 219-194 219 194-28 29L350 141 159 309Z" fill="url(#roof)" stroke="#fff9eb" strokeWidth="5" strokeLinejoin="round"/>
-      <path d="m142 280 208-182 208 182M163 286l187-164 187 164" stroke="#fff5e3" strokeWidth="2" strokeLinecap="round"/>
+      <path d="m135 280 204-182q11-11 22 0l204 182q8 9 0 17l-16 15q-5 5-11-1L350 146 162 311q-6 6-11 1l-16-15q-8-8 0-17Z" fill="url(#roof)" stroke="#fff9eb" strokeWidth="5" strokeLinejoin="round"/>
+      <path d="m144 279 198-177q8-8 16 0l198 177M164 287l180-159q6-6 12 0l180 159" stroke="#fff5e3" strokeWidth="1.8" strokeLinecap="round"/>
+      <path d="m140 277 196-176q14-14 28 0l196 176" stroke="#fffdf5" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round"/>
+      {[0,1].map(side=><g key={`snow-${side}`} transform={side?"translate(700 0) scale(-1 1)":undefined} stroke="#fffdf5" strokeLinecap="round"><path d="m176 246 0 9m47-51 0 7m48-50 0 8m44-48 0 6" strokeWidth="5"/><path d="m143 276 7-7m56-51 7-6m52-47 8-7m53-48 9-7" strokeWidth="14"/></g>)}
       {[0,1].map(side=><g key={side} transform={side?"translate(700 0) scale(-1 1)":undefined}>
-        {Array.from({length:10},(_,i)=><g key={i} transform={`translate(${162+i*19} ${272-i*16.7}) rotate(-41.4)`}><path d="m0 0 9-8 9 8-9 8Z" stroke="#fff6e4" strokeWidth="1.8" strokeLinejoin="round"/><circle cx="9" cy="0" r="2" fill="#fff6e4"/></g>)}
+        {Array.from({length:8},(_,i)=><g key={i} transform={`translate(${169+i*22} ${272-i*19.4}) rotate(-41.4)`}><path d="M8 0C2-8-4 0 1 5l7 7 7-7c5-5-1-13-7-5Z" stroke="#fff6e4" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></g>)}
         <path d="M269 277h25m-12-12v25m-9-21 18 17m-18 0 18-17" stroke="#fff6e7" strokeWidth="2.5" strokeLinecap="round"/>
         {[0,1,2,3,4,5].map(i=><circle key={i} cx="179" cy={434+i*19} r="2.2" fill="#fff5df"/>)}
       </g>)}

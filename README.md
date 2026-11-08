@@ -1,8 +1,12 @@
 # Chez Laulau · Noël 2026
 
-Invitation de Laura, publiée sur GitHub Pages : https://denisbtl.github.io/Christmas/
+Invitation de Laura. Sources : https://github.com/DenisBTL/Christmas
 
-Maison en pain d’épices à deux niveaux, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
+Lien public de consultation : https://noel-laulau-reponses-github.norbertmoutier.chatgpt.site
+
+Lien GitHub prévu après activation de Pages sur main, dossier /docs : https://denisbtl.github.io/Christmas/
+
+Maison en pain d’épices à deux niveaux, toit arrondi enneigé et frise de cœurs, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
 
 Les fenêtres affichent leurs contenus devant la maison : bar à hot chocolate avec pluie de marshmallows après six ajouts, décos facultatives pour les cookies préparés par Laura, et rappel de la tenue de Noël. Le formulaire permet de choisir plusieurs dates en décorant un sapin.
 
@@ -23,7 +27,7 @@ Le point d’entrée GitHub est `github/main.tsx`. La construction produit `docs
 
 GitHub Pages héberge le site et les animations. L’enregistrement partagé utilise le Worker déclaré dans `services/replies-hosting.json`, avec une base D1 et les migrations de `drizzle/`. Le code du Worker est conservé dans `services/replies-relay.mjs` et son test SQLite dans `services/check-replies.mjs`.
 
-Le point d’accès est défini dans `vite.github.config.ts`. Son CORS autorise exclusivement l’origine GitHub Pages. Les erreurs réseau et les réponses invalides sont affichées sans prétendre que l’enregistrement a réussi.
+Le point d’accès est défini dans `vite.github.config.ts`. Son CORS autorise l’origine GitHub Pages et sa propre origine pour la consultation directe. Les erreurs réseau et les réponses invalides sont affichées sans prétendre que l’enregistrement a réussi. `node scripts/prepare-replies-site.mjs` prépare aussi le site public depuis les fichiers construits de `docs/`.
 
 Le prénom et l’initiale du nom sont affichés dans le récapitulatif. Le nom complet et un identifiant aléatoire sont conservés côté serveur. L’identifiant, enregistré sur l’appareil de l’invitée, permet de mettre à jour sa réponse sans doublon. Changer d’appareil ou effacer les données du navigateur ne permet pas de retrouver cet identifiant.
 
