@@ -1,35 +1,36 @@
-# Noël chez Laulau
+# Chez Laulau · Noël 2026
 
-Invitation de Noël interactive : maison en pain d’épices bordeaux et glaçage blanc, enveloppe animée, choix de plusieurs dates et récapitulatif partagé.
+Invitation de Laura, publiée sur GitHub Pages : https://denisbtl.github.io/Christmas/
 
-La maison cache trois surprises : chocolat et marshmallows, biscuit qui fait un clin d’œil et petits bonheurs à découvrir. Les trois découvertes allument sa guirlande. La neige peut être arrêtée depuis l’en-tête.
+Maison en pain d’épices à deux niveaux, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
 
-Les disponibilités se choisissent en allumant les boules datées d’un sapin. La lettre se personnalise avec le prénom. Après confirmation d’enregistrement par le serveur, une animation livre le petit mot dans la boîte aux lettres. La tablée des réponses affiche les prénoms et initiales des personnes ayant répondu.
+Les fenêtres affichent leurs contenus devant la maison : bar à hot chocolate avec pluie de marshmallows après six ajouts, décos facultatives pour les cookies préparés par Laura, et rappel de la tenue de Noël. Le formulaire permet de choisir plusieurs dates en décorant un sapin.
 
 ## Développement
 
-Node.js 22.13 ou ultérieur. Sous Windows, employer npm.cmd si PowerShell bloque npm.ps1.
+Node.js 22.13 ou ultérieur. Sous Windows, utiliser npm.cmd si PowerShell bloque npm.ps1.
 
-- Installer : `npm.cmd run install:ci`
-- Démarrer : `npm.cmd run dev`
-- Vérifier les types : `node node_modules/typescript/bin/tsc --noEmit`
-- Construire : `npm.cmd run build`
+- Installation : `npm.cmd run install:ci`
+- Développement complet local : `npm.cmd run dev`
+- Vérification des types : `node node_modules/typescript/bin/tsc --noEmit`
+- Publication statique à préparer : `npm.cmd run build:github`
+- Aperçu de la version GitHub : `node node_modules/vite/bin/vite.js preview --config vite.github.config.ts`
 
 Les dates sont définies dans `lib/christmas.ts` : 12, 13, 21, 22 et 23 décembre 2026.
-Les réponses sont enregistrées côté serveur dans D1, avec le binding DB déclaré dans `.openai/hosting.json`.
-Les migrations figurent dans `drizzle/` et sont appliquées par Sites lors de la publication.
+Le point d’entrée GitHub est `github/main.tsx`. La construction produit `docs/`, publié par GitHub Pages depuis la branche main. Reconstruire et inclure `docs/` dans chaque commit qui modifie le site.
 
-## Réponses
+## Réponses partagées
 
-Le prénom et l’initiale du nom sont affichés dans le récapitulatif. Le nom complet est conservé côté serveur.
-Un identifiant aléatoire, conservé sur l’appareil de l’invité, permet de modifier sa propre réponse sans en créer une deuxième.
-Changer d’appareil ou effacer les données du navigateur ne permet pas de retrouver cet identifiant.
+GitHub Pages héberge le site et les animations. L’enregistrement partagé utilise le Worker déclaré dans `services/replies-hosting.json`, avec une base D1 et les migrations de `drizzle/`. Le code du Worker est conservé dans `services/replies-relay.mjs` et son test SQLite dans `services/check-replies.mjs`.
 
-Le formulaire confirme uniquement les envois enregistrés par le serveur. Une erreur de réseau permet de réessayer en conservant les choix.
-Le site respecte la préférence de réduction des animations, utilise une boîte de dialogue native et reste accessible au clavier.
+Le point d’accès est défini dans `vite.github.config.ts`. Son CORS autorise exclusivement l’origine GitHub Pages. Les erreurs réseau et les réponses invalides sont affichées sans prétendre que l’enregistrement a réussi.
 
-## Publication
+Le prénom et l’initiale du nom sont affichés dans le récapitulatif. Le nom complet et un identifiant aléatoire sont conservés côté serveur. L’identifiant, enregistré sur l’appareil de l’invitée, permet de mettre à jour sa réponse sans doublon. Changer d’appareil ou effacer les données du navigateur ne permet pas de retrouver cet identifiant.
 
-La configuration et l’identité du site sont conservées dans `.openai/hosting.json`.
-Utiliser le flux de publication du plugin Sites pour synchroniser le code et publier une version construite du même commit.
-Ne jamais mettre de jeton ou de mot de passe dans ce dépôt.
+La préférence de réduction des animations est respectée : neige immobile, pas de pluie de marshmallows ni de déplacement d’animaux, et confirmation immédiate.
+
+## Hébergement
+
+Le site historique Sites de Laura reste inchangé et conserve sa configuration `.openai/hosting.json`. La version GitHub utilise un service de réponses distinct, appartenant au compte Sites actuellement disponible. Aucune réponse n’était présente sur le service historique au moment du passage à GitHub.
+
+Les sources locales et les sources du service de réponses sont conservées. Aucun jeton GitHub ne figure dans le dépôt, les fichiers construits ou le navigateur des invitées.
