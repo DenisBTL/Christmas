@@ -21,6 +21,8 @@ Node.js 22.13 ou ultérieur. Sous Windows, utiliser npm.cmd si PowerShell bloque
 - Aperçu de la version GitHub : `node node_modules/vite/bin/vite.js preview --config vite.github.config.ts`
 
 Les dates sont définies dans `lib/christmas.ts` : 12, 13, 21, 22 et 23 décembre 2026.
+
+Le bouton « Musique de Noël » joue un arrangement instrumental de « Vive le vent » (Jingle Bells), avec des clochettes synthétisées directement dans le navigateur. Il démarre uniquement au clic, peut être coupé et s’arrête quand l’onglet est masqué. Aucune piste enregistrée ni service audio externe n’est utilisé. La partition et le moteur audio sont dans `lib/christmas-music.ts`.
 Le point d’entrée GitHub est `github/main.tsx`. La construction produit `docs/`, publié par GitHub Pages depuis la branche main. Reconstruire et inclure `docs/` dans chaque commit qui modifie le site.
 
 ## Réponses partagées
