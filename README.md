@@ -24,6 +24,7 @@ Node.js 22.13 ou ultérieur. Sous Windows, utiliser npm.cmd si PowerShell bloque
 
 Les dates sont définies dans `lib/christmas.ts` : 12, 13, 21, 22 et 23 décembre 2026.
 
+Le bouton « Musique de Noël » ouvre le lecteur YouTube de « Santa Claus Is Coming to Town » des Andrews Sisters. La vidéo choisie par Laura contient un album complet : https://www.youtube.com/watch?v=GHaRsbAZiyE. Les repères de sa description délimitent le morceau de 08:41 à 11:20 : le lecteur utilise `start=521&end=680`, sans radio, playlist ou boucle d’album. Le lecteur reste visible, avec les commandes YouTube et un lien direct au début du morceau. Il n’est chargé qu’au clic. Fermer le lecteur ou masquer l’onglet coupe la musique. Le composant est dans `app/christmas-music.tsx` ; aucun enregistrement audio n’est copié dans le dépôt. La disponibilité de la lecture intégrée dépend de YouTube et des réglages de la vidéo.
 Le point d’entrée GitHub est `github/main.tsx`. La construction produit `docs/`, publié par GitHub Pages depuis la branche main. Reconstruire et inclure `docs/` dans chaque commit qui modifie le site.
 
 ## Réponses partagées

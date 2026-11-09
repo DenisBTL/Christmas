@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, ArrowUpRight, CalendarDays, ChevronLeft, Cookie, Film, Coffee, Mail, Sparkles, UsersRound, X } from "lucide-react";
 import { ChristmasGarland, DateTree, FestiveTable, GingerFriend, HousePlayground, LetterDelivery, Snowfall } from "./christmas-magic";
 import { DATES, dateLabel, type Reply, type Results } from "../lib/christmas";
+import { ChristmasMusicButton } from "./christmas-music";
 
 const storageKey = "noel-laulau-2026-reply";
 type View = "invitation" | "results" | null;
@@ -107,7 +108,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     <header className="site-header">
       <a className="wordmark" href="#" aria-label="Chez Laulau, accueil"><span className="brand-star">✧</span> Chez Laulau</a>
       <span className="header-season">Cookies, chocolat chaud et film de Noël</span>
-      <div className="header-actions"><button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
+      <div className="header-actions"><ChristmasMusicButton/><button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
     </header>
 
     <main id="invitation">
