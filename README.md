@@ -2,9 +2,11 @@
 
 Invitation de Laura. Sources : https://github.com/DenisBTL/Christmas
 
-Lien public de consultation : https://noel-laulau-reponses-github.norbertmoutier.chatgpt.site
+Lien public de consultation : https://denisbtl.github.io/Christmas/
 
-Lien GitHub prévu après activation de Pages sur main, dossier /docs : https://denisbtl.github.io/Christmas/
+GitHub Pages est activé sur la branche `main`, dossier `/docs`.
+
+Autre lien de consultation : https://noel-laulau-reponses-github.norbertmoutier.chatgpt.site
 
 Maison en pain d’épices à deux niveaux, toit arrondi enneigé et frise en volutes, décor beige à l’arrivée puis bordeaux après le premier clic, neige continue. Une frise de cœurs bordeaux et de glaçage blanc sépare les deux niveaux. Les volets courbes restent ouverts et les deux baies du rez-de-chaussée sont fixes. La porte accueille trois rennes, puis un golden déguisé en renne, et se referme après leur passage.
 
