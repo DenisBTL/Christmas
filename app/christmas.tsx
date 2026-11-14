@@ -13,7 +13,6 @@ type View = "invitation" | "results" | null;
 
 export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEndpoint?: string } = {}) {
   const [organizerSecret, setOrganizerSecret] = useState("");
-  const [personalOpen, setPersonalOpen] = useState(false);
   useEffect(() => { const read = () => { const match = window.location.hash.match(/^#organisation\/([a-f0-9]{64})$/); setOrganizerSecret(match?.[1] || ""); }; read(); window.addEventListener("hashchange", read); return () => window.removeEventListener("hashchange", read); }, []);
   const [view, setView] = useState<View>(null);
   const [firstName, setFirstName] = useState("");
@@ -115,7 +114,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     <header className="site-header">
       <a className="wordmark" href="#" aria-label="Chez Laulau, accueil"><span className="brand-star">✧</span> Chez Laulau</a>
       <span className="header-season">Cookies, chocolat chaud et film de Noël</span>
-      <div className="header-actions">{!personalOpen && <ChristmasMusicButton/>}<button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
+      <div className="header-actions"><ChristmasMusicButton/><button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
     </header>
 
     <main id="invitation">
@@ -135,7 +134,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
         </div>
       </div>
 
-      <PersonalInvitations endpoint={replyEndpoint} onInteract={welcomeChristmas} onOpenChange={setPersonalOpen}/>
+      <PersonalInvitations endpoint={replyEndpoint} onInteract={welcomeChristmas}/>
 
       <section className="how-it-works" aria-label="Comment répondre à l’invitation">
         <div className="section-aside"><span className="mini-label">AU PROGRAMME</span><p>On remet <em>ça ?</em></p></div>

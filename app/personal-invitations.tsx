@@ -15,7 +15,7 @@ function Quill() {
   return <svg className="invitation-quill" viewBox="0 0 160 240" fill="none" aria-hidden="true"><path d="M30 217C50 164 78 82 139 15C150 74 139 121 93 153L66 158L73 179L30 217Z" fill="#d1b57a" opacity=".55"/><path d="M30 217C54 151 96 66 139 15M65 155L111 123M79 125L125 92M93 97L133 62M48 194L71 180" stroke="#795434" strokeWidth="2" strokeLinecap="round"/><path d="M20 226L32 211" stroke="#5b3926" strokeWidth="3" strokeLinecap="round"/></svg>;
 }
 
-export function PersonalInvitations({ endpoint, onInteract, onOpenChange }: { endpoint: string; onInteract: () => void; onOpenChange: (open: boolean) => void }) {
+export function PersonalInvitations({ endpoint, onInteract }: { endpoint: string; onInteract: () => void }) {
   const [stage, setStage] = useState<Stage | null>(null);
   const [guest, setGuest] = useState<Guest | null>(null);
   const [films, setFilms] = useState<string[]>([]);
@@ -37,8 +37,7 @@ export function PersonalInvitations({ endpoint, onInteract, onOpenChange }: { en
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialog.current?.showModal();
-    onOpenChange(true);
-    return () => { document.body.style.overflow = previous; onOpenChange(false); trigger.current?.focus(); };
+    return () => { document.body.style.overflow = previous; trigger.current?.focus(); };
   }, [Boolean(stage)]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (stage) { dialog.current?.scrollTo(0,0); focusTarget.current?.focus(); } }, [stage]);
 
