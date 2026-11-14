@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Caveat:wght@400;500;600&family=DM+Sans:wght@400;450;500;550;600;650;700&display=swap');
+@import "./personal-invitations.css";
 
 :root{--paper:#f8f4eb;--burgundy:#702b3b;--burgundy-dark:#4d1c29;--gold:#b28b4b;--ink:#513d37;--muted:#87766a;--line:#e1d7c4}
 *{box-sizing:border-box}
@@ -514,3 +515,5 @@ body{background:#f8f4eb}
 .music-youtube-link{display:inline-flex;align-items:center;gap:7px;min-height:32px;font-size:11px;text-underline-offset:3px;color:#702b3b}
 @media(min-width:1001px) and (max-width:1250px){.header-season{display:none}}
 @media(max-width:700px){.site-header{height:auto;min-height:108px;flex-wrap:wrap;gap:10px;padding-top:21px;padding-bottom:16px}.site-header .header-actions{width:100%;justify-content:space-between;gap:15px}.christmas-music-button{font-size:11px;padding-left:12px;padding-right:12px}.christmas-music-player{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}.music-player-heading h2{font-size:22px}}
+
+.hero-availability{display:block;margin:15px 0 0;padding:4px 0;font-size:11px}.hero .primary-button{font-size:15px}

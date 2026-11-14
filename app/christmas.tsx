@@ -5,11 +5,16 @@ import { ArrowRight, ArrowUpRight, CalendarDays, ChevronLeft, Cookie, Film, Coff
 import { ChristmasGarland, DateTree, FestiveTable, GingerFriend, HousePlayground, LetterDelivery, Snowfall } from "./christmas-magic";
 import { DATES, dateLabel, type Reply, type Results } from "../lib/christmas";
 import { ChristmasMusicButton } from "./christmas-music";
+import { PersonalInvitations, PARTY_NAMES } from "./personal-invitations";
+import { Organizer } from "./organizer";
 
 const storageKey = "noel-laulau-2026-reply";
 type View = "invitation" | "results" | null;
 
 export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEndpoint?: string } = {}) {
+  const [organizerSecret, setOrganizerSecret] = useState("");
+  const [personalOpen, setPersonalOpen] = useState(false);
+  useEffect(() => { const read = () => { const match = window.location.hash.match(/^#organisation\/([a-f0-9]{64})$/); setOrganizerSecret(match?.[1] || ""); }; read(); window.addEventListener("hashchange", read); return () => window.removeEventListener("hashchange", read); }, []);
   const [view, setView] = useState<View>(null);
   const [firstName, setFirstName] = useState("");
   const [dates, setDates] = useState<string[]>([]);
@@ -100,6 +105,8 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     finally { setSending(false); }
   }
 
+  if (organizerSecret) return <Organizer endpoint={replyEndpoint} secret={organizerSecret}/>;
+
   return <div className={`christmas-site ${night ? "night-mode" : "snow-white"}`} onClickCapture={welcomeChristmas}>
     <Snowfall active/>
     <ChristmasGarland/>
@@ -108,7 +115,7 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
     <header className="site-header">
       <a className="wordmark" href="#" aria-label="Chez Laulau, accueil"><span className="brand-star">✧</span> Chez Laulau</a>
       <span className="header-season">Cookies, chocolat chaud et film de Noël</span>
-      <div className="header-actions"><ChristmasMusicButton/><button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
+      <div className="header-actions">{!personalOpen && <ChristmasMusicButton/>}<button className="header-link" onClick={() => open("results")}>Les réponses <ArrowUpRight size={16}/></button></div>
     </header>
 
     <main id="invitation">
@@ -117,9 +124,10 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
           <div className="eyebrow"><span/> NOËL À LA MAISON · DÉCEMBRE 2026 <span/></div>
           <h1>Tu es invitée<br/>à mon après-midi<br/><em>de Noël !</em><span className="title-star">✧</span></h1>
           <p className="hero-description">Comme l’année dernière, je vous invite à la maison<br className="desktop-break"/> pour une après-midi et une soirée de Noël !</p>
-          <p className="hero-subcopy">Tu peux venir l’après-midi, le soir, ou rester pour les deux.<br/>Dis-moi les dates qui t’arrangent et je m’occupe de la suite.</p>
-          <button className="primary-button" onClick={() => open("invitation")}><Mail size={18} strokeWidth={1.5}/>{saved ? "Retrouver ma réponse" : "Choisir mes dates"}<ArrowRight size={18}/></button>
-          <div className="hero-note"><CalendarDays size={14}/><span>5 dates proposées · Décembre 2026</span></div>
+          <p className="hero-subcopy">Tu peux venir l’après-midi, le soir, ou rester pour les deux.<br/>Les dates sont fixées : retrouve la tienne dans ta lettre.</p>
+          <button className="primary-button" onClick={() => document.getElementById("receive-personal-invitation")?.click()}><Mail size={20} strokeWidth={1.5}/>Recevez votre invitation<ArrowRight size={18}/></button>
+          <button className="text-button hero-availability" onClick={() => open("invitation")}>{saved ? "Retrouver mes disponibilités" : "Revoir le choix des dates"}</button>
+          <div className="hero-note"><CalendarDays size={14}/><span>12 et 22 décembre · Rendez-vous à 15 h 30</span></div>
           <a className="ginger-whisper" href="#maison"><GingerFriend/><span><strong>Le programme est dans les fenêtres.</strong><span>Et les rennes attendent devant la porte ♡</span></span><Sparkles size={17}/></a>
         </div>
         <div className="house-scene">
@@ -127,11 +135,13 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
         </div>
       </div>
 
+      <PersonalInvitations endpoint={replyEndpoint} onInteract={welcomeChristmas} onOpenChange={setPersonalOpen}/>
+
       <section className="how-it-works" aria-label="Comment répondre à l’invitation">
         <div className="section-aside"><span className="mini-label">AU PROGRAMME</span><p>On remet <em>ça ?</em></p></div>
         <div className="step"><span className="step-icon"><Cookie size={21} strokeWidth={1.3}/></span><div><h2>L’après-midi</h2><p>On décore les cookies que je prépare.</p></div></div>
         <div className="step"><span className="step-icon"><Coffee size={21} strokeWidth={1.3}/></span><div><h2>Bar à chocolat chaud</h2><p>Et plein de choses à grignoter.</p></div></div>
-        <div className="step"><span className="step-icon"><Film size={21} strokeWidth={1.3}/></span><div><h2>Le soir</h2><p>Pizzas, plaids et film de Noël.</p></div></div>
+        <div className="step"><span className="step-icon"><Film size={21} strokeWidth={1.3}/></span><div><h2>Le soir</h2><p>Apéro dînatoire, plaids et film de Noël.</p></div></div>
       </section>
     </main>
 
@@ -172,9 +182,9 @@ export default function Christmas({ replyEndpoint = "/api/replies" }: { replyEnd
         {view === "results" && <>
           <p className="mini-label">LES DISPONIBILITÉS</p>
           <h2 id="dialog-title">Qui est <em>dispo</em> ?</h2>
-          <p className="letter-intro">Voilà les dispos de chacune.<br/>Je vous confirmerai la date retenue.</p>
+          <p className="letter-intro">Neuf à la maison, en comptant Laura ♡<br/>Les dates retenues sont les 12 et 22 décembre.</p>
           {loading ? <div className="results-state" role="status"><span className="spinner"/> On rassemble les petits mots…</div> : resultsError ? <div className="results-state"><p className="error-message" role="alert">{resultsError}</p><button className="text-button" onClick={() => void loadResults()}>Réessayer</button></div> : results && <>
-            <FestiveTable guests={results.guests ?? Array.from(new Set(results.dates.flatMap(date => date.guests)))} total={results.total}/>
+            <FestiveTable guests={PARTY_NAMES} total={9}/>
             <div className="reply-total"><UsersRound size={16}/>{results.total} personne{results.total > 1 ? "s" : ""} {results.total > 1 ? "ont" : "a"} répondu</div>
             {results.total === 0 && <p className="empty-note">Pas encore de réponse. Tu ouvres le bal ?</p>}
             <div className="results-list">{results.dates.map(item => <div className="result-row" key={item.date}><div className="result-heading"><span>{dateLabel(item.date)}</span><strong>{item.count}<UsersRound size={13}/></strong></div><div className="result-bar"><span style={{ width: `${results.total ? item.count / results.total * 100 : 0}%` }}/></div><p>{item.guests.length ? item.guests.join(" · ") : "Pas encore de réponse pour cette date"}</p></div>)}</div>

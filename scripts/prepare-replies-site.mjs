@@ -17,5 +17,10 @@ collect(docs);
 mkdirSync(join(output, "worker"), { recursive: true });
 mkdirSync(join(output, ".openai"), { recursive: true });
 copyFileSync(resolve(project, "services/replies-hosting.json"), join(output, ".openai/hosting.json"));
-writeFileSync(join(output, "worker/index.js"), "const siteAssets = " + JSON.stringify(assets) + ";\n" + readFileSync(resolve(project, "services/replies-relay.mjs"), "utf8"));
+const guestRegistry = readFileSync(resolve(project, "lib/guests.json"), "utf8");
+const invitations = readFileSync(resolve(project, "services/invitations.mjs"), "utf8").replace(/import partyGuests[^;]*;/, "const partyGuests = " + guestRegistry + ";").replace("export async function handleInvitations", "async function handleInvitations");
+const relay = readFileSync(resolve(project, "services/replies-relay.mjs"), "utf8").replace(`import { handleInvitations } from "./invitations.mjs";`, "");
+writeFileSync(join(output, "worker/index.js"), "const siteAssets = " + JSON.stringify(assets) + ";\n" + invitations + "\n" + relay);
+function copyMigrations(directory, target) { mkdirSync(target, { recursive: true }); for (const entry of readdirSync(directory, { withFileTypes: true })) { const from = join(directory, entry.name), to = join(target, entry.name); if (entry.isDirectory()) copyMigrations(from, to); else copyFileSync(from, to); } }
+copyMigrations(resolve(project, "drizzle"), join(output, "drizzle"));
 console.log("Prepared public preview and shared replies from docs/.");

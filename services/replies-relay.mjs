@@ -1,3 +1,4 @@
+import { handleInvitations } from "./invitations.mjs";
 const githubOrigin = "https://denisbtl.github.io";
 const dates = ["2026-12-12","2026-12-13","2026-12-21","2026-12-22","2026-12-23"];
 const commonHeaders = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Vary": "Origin" };
@@ -6,7 +7,7 @@ export default {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin");
     const allowedOrigin = origin === githubOrigin || origin === url.origin ? origin : null;
-    const cors = allowedOrigin ? { "Access-Control-Allow-Origin": allowedOrigin, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "600" } : {};
+    const cors = allowedOrigin ? { "Access-Control-Allow-Origin": allowedOrigin, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization", "Access-Control-Max-Age": "600" } : {};
     const headers = { ...commonHeaders, ...cors };
     const json = (body, status = 200) => Response.json(body, { status, headers });
     if ((request.method === "GET" || request.method === "HEAD") && typeof siteAssets !== "undefined") {
@@ -15,10 +16,11 @@ export default {
       if (asset) return new Response(request.method === "HEAD" ? null : asset.content, { headers: { "Content-Type": asset.type, "X-Content-Type-Options": "nosniff", "Cache-Control": path.startsWith("/assets/") ? "public, max-age=31536000, immutable" : "no-cache" } });
     }
     if (url.pathname === "/health") return json({ ok: true });
-    if (url.pathname !== "/api/replies") return json({ error: "Page introuvable." }, 404);
+    if (!["/api/replies","/api/invitations","/api/organizer"].includes(url.pathname)) return json({ error: "Page introuvable." }, 404);
     if (origin && !allowedOrigin) return json({ error: "Cette origine ne peut pas envoyer de réponse." }, 403);
     if (!["GET","POST","OPTIONS"].includes(request.method)) return json({ error: "Méthode indisponible." }, 405);
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
+    if (url.pathname !== "/api/replies") return handleInvitations(request, env, headers);
     let payload;
     if (request.method === "POST") {
       if (!request.headers.get("Content-Type")?.includes("application/json")) return json({ error: "Format de réponse incorrect." }, 415);

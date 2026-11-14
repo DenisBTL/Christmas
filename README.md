@@ -42,3 +42,19 @@ La préférence de réduction des animations est respectée : neige immobile, pa
 Le site historique Sites de Laura reste inchangé et conserve sa configuration `.openai/hosting.json`. La version GitHub utilise un service de réponses distinct, appartenant au compte Sites actuellement disponible. Aucune réponse n’était présente sur le service historique au moment du passage à GitHub.
 
 Les sources locales et les sources du service de réponses sont conservées. Aucun jeton GitHub ne figure dans le dépôt, les fichiers construits ou le navigateur des invitées.
+
+
+## Invitations personnalisées et carnet privé
+
+Le bouton « Recevez votre invitation » ouvre les lettres personnelles. La liste dans `lib/guests.json` est la source des huit invitées et des dates attribuées : Marie, Lara, Lou et Lucinda le 12 décembre ; Joséphine, Jade, Malou et Victoire le 22 décembre 2026. Laura complète les neuf prénoms de la table. Les anciennes disponibilités restent conservées séparément.
+
+Après la lettre, le parcours propose les films, puis la présence et les allergies/intolérances. `POST /api/invitations` enregistre ces réponses dans `invitation_responses`. Les modifications depuis le même appareil utilisent un identifiant aléatoire ; un autre identifiant ne peut pas écraser une réponse déjà reçue. Les allergies et les films ne sont jamais renvoyés par le récapitulatif public des disponibilités. Le navigateur ne conserve que les identifiants de modification, sans information alimentaire.
+
+Laura consulte `#organisation/<clé privée>` sur le site. La clé de 64 caractères est une valeur secrète de production nommée `ORGANIZER_KEY`, configurée avec Sites et absente du dépôt. Le navigateur transmet cette clé au seul point d’accès `POST /api/organizer`, dans l’en-tête Authorization. Ce lien privé donne accès aux réponses sans compte : ne pas le diffuser aux invitées. Il permet d’actualiser les réponses et de télécharger un CSV compatible Excel et Google Sheets. Aucun compte Google ni connexion Google Drive n’est nécessaire.
+
+Les routes locales Vinext utilisent les mêmes règles. Le Worker hébergé est assemblé depuis `services/invitations.mjs`, le registre des invitées et `services/replies-relay.mjs`. `scripts/prepare-replies-site.mjs` copie aussi les migrations pour la publication Sites. Générer une nouvelle migration pour chaque changement de schéma ; ne pas modifier les migrations déjà appliquées.
+
+Vérifications :
+- `node services/check-replies.mjs` : anciennes disponibilités.
+- `node services/check-invitations.mjs` : nouvelles réponses, dates canoniques, accès privé, CORS, limites et protection contre l’écrasement.
+- `node node_modules/typescript/bin/tsc --noEmit`, puis `npm.cmd run build:github`.

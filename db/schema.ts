@@ -6,3 +6,14 @@ export const replies = sqliteTable("replies", {
   dates: text("dates", { mode: "json" }).$type<string[]>().notNull(),
   updatedAt: text("updated_at").notNull(),
 });
+
+export const invitationResponses = sqliteTable("invitation_responses", {
+  guestId: text("guest_id").primaryKey(),
+  token: text("token").notNull(),
+  attendance: text("attendance").notNull(),
+  films: text("films", { mode: "json" }).$type<string[]>().notNull(),
+  allergyStatus: text("allergy_status").notNull(),
+  allergyDetail: text("allergy_detail").notNull(),
+  note: text("note").notNull(),
+  updatedAt: text("updated_at").notNull(),
+});

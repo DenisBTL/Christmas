@@ -165,10 +165,9 @@ export function LetterDelivery() {
 }
 
 export function FestiveTable({ guests, total }: { guests: string[]; total: number }) {
-  return <div className="festive-table" aria-label="Les invitées qui ont répondu">
+  return <div className={`festive-table ${guests.length > 6 ? "all-guests" : ""}`} aria-label="Les prénoms autour de la table">
     <div className="table-cloth"><span className="table-runner"/><span className="table-candle candle-left"/><span className="table-candle candle-right"/><span className="table-centrepiece">✧</span></div>
-    {guests.slice(0,6).map((name,i) => <div key={`${name}-${i}`} className={`table-guest guest-${i}`}><span className="guest-plate">♡</span><span className="guest-name">{name}</span></div>)}
+    {guests.map((name,i) => <div key={`${name}-${i}`} className={`table-guest guest-${i}`}><span className="guest-plate">♡</span><span className="guest-name">{name}</span></div>)}
     {!total && <span className="table-empty-note">Ta petite place t’attend ♡</span>}
-    {total>6 && <span className="table-extra">et {total-6} autre{total>7?"s":""} petit{total>7?"s":""} mot{total>7?"s":""} ♡</span>}
   </div>;
 }

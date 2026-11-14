@@ -1,0 +1,42 @@
+[
+  {
+    "id": "marie",
+    "name": "Marie",
+    "date": "2026-12-12"
+  },
+  {
+    "id": "lara",
+    "name": "Lara",
+    "date": "2026-12-12"
+  },
+  {
+    "id": "lou",
+    "name": "Lou",
+    "date": "2026-12-12"
+  },
+  {
+    "id": "lucinda",
+    "name": "Lucinda",
+    "date": "2026-12-12"
+  },
+  {
+    "id": "josephine",
+    "name": "Joséphine",
+    "date": "2026-12-22"
+  },
+  {
+    "id": "jade",
+    "name": "Jade",
+    "date": "2026-12-22"
+  },
+  {
+    "id": "malou",
+    "name": "Malou",
+    "date": "2026-12-22"
+  },
+  {
+    "id": "victoire",
+    "name": "Victoire",
+    "date": "2026-12-22"
+  }
+]
